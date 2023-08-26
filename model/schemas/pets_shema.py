@@ -12,10 +12,10 @@ id_and_name = Schema(
 pet_shema = Schema(
     {
         "id": int,
-        "category": {id_and_name},
+        "category": id_and_name,
         "name": str,
         "photoUrls": [str],
-        "tags": [{id_and_name}],
+        "tags": [id_and_name],
         "status": str
     },
     extra=PREVENT_EXTRA,

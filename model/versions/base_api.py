@@ -15,6 +15,11 @@ class BaseApi:
         response: Response = requests.post(path, json=body)
         return response
 
+    @staticmethod
+    def post_only_path(path):
+        response: Response = requests.post(path)
+        return response
+
 
     @staticmethod
     def put(path, body):

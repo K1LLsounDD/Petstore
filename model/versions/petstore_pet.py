@@ -3,6 +3,7 @@ from model.versions.base_api import BaseApi
 
 class PetApi(BaseApi):
     base_url = "https://petstore.swagger.io/v2"
+
     @classmethod
     def data_filling(cls, pet_id, category_id,
                category_name, pet_name,
@@ -72,3 +73,9 @@ class PetApi(BaseApi):
         put_result = self.put(self.base_url + path, body)
 
         return put_result
+
+    def post_status_single_pet(self, pet_id, state):
+        path = f"/pet/{pet_id}?status={state}"
+
+        post_result = self.post_only_path(self.base_url + path)
+        return post_result

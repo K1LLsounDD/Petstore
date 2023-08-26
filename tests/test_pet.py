@@ -37,3 +37,19 @@ class TestPositivePet:
         assert S(pets_shema.get_single_pet) == result.json()
 
 
+    def test_data_filling_pet(self):
+        pet_api = PetApi()
+        pet_name = "Shakira"
+
+        result: Response = pet_api.put_single_pet(
+            pet_id=163634637, category_id=16633666,
+            category_name="dog", pet_name=pet_name,
+            url_photos="photo", tag_id=144034,
+            tag_name="big", state="available"
+        )
+        logging.info(curlify.to_curl(result.request))
+        logging.info(result.json())
+
+        assert result.status_code == 200
+        assert result.json()["name"] == pet_name
+        assert S(pets_shema.put_single_pet) == result.json()

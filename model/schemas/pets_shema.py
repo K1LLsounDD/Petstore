@@ -38,6 +38,8 @@ get_pet_not_found = Schema(three_default_values)
 
 create_single_pet = Schema(pet_shema)
 
+put_single_pet = Schema(pet_shema)
+
 
 
 

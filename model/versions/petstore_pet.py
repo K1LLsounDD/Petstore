@@ -4,7 +4,7 @@ from model.versions.base_api import BaseApi
 class PetApi(BaseApi):
     base_url = "https://petstore.swagger.io/v2"
     @classmethod
-    def create(cls, pet_id, category_id,
+    def data_filling(cls, pet_id, category_id,
                category_name, pet_name,
                url_photos, tag_id, tag_name,
                state
@@ -37,7 +37,7 @@ class PetApi(BaseApi):
 
     ):
         path = "/pet"
-        body = PetApi.create(pet_id, category_id,
+        body = PetApi.data_filling(pet_id, category_id,
                category_name, pet_name,
                url_photos, tag_id, tag_name,
                state)
@@ -54,3 +54,21 @@ class PetApi(BaseApi):
 
         return get_result
 
+    def put_single_pet(
+            self, pet_id, category_id,
+               category_name, pet_name,
+               url_photos, tag_id, tag_name,
+               state
+
+    ):
+        path = "/pet"
+        body = PetApi.data_filling(
+            pet_id, category_id,
+            category_name, pet_name,
+            url_photos, tag_id, tag_name,
+            state
+        )
+
+        put_result = self.put(self.base_url + path, body)
+
+        return put_result

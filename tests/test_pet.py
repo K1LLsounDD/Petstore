@@ -31,6 +31,7 @@ class TestPositivePet:
     def test_check_new_pet(self, pet_id):
         pet_api = PetApi()
         result: Response = pet_api.get_single_pet(pet_id=pet_id)
+
         logging.info(curlify.to_curl(result.request))
         logging.info(result.status_code)
 
@@ -64,7 +65,21 @@ class TestPositivePet:
         result: Response = pet_api.post_status_single_pet(pet_id=163634637, state=pet_state)
         # result: Response = requests.post("https://petstore.swagger.io/v2/pet/163634637?status=pending")
         logging.info(curlify.to_curl(result.request))
+        logging.info(result.json())
 
         assert result.status_code == 200
         assert get_pet.json()["status"] == pet_state
+        assert S(pets_schema.three_default_values) == result.json()
+
+
+    @pytest.mark.parametrize("pet_id", [163634637])
+    def test_delete_single_pet(self, pet_id):
+        pet_api = PetApi()
+
+        result: Response = pet_api.delete_single_pet(pet_id=pet_id)
+        logging.info(curlify.to_curl(result.request))
+
+        assert result.status_code == 200
+        assert result.json()["message"] == str(pet_id)
+        assert pet_api.get_single_pet(pet_id=pet_id).json()["message"] == "Pet not found"
         assert S(pets_schema.three_default_values) == result.json()

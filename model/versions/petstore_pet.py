@@ -78,4 +78,12 @@ class PetApi(BaseApi):
         path = f"/pet/{pet_id}?status={state}"
 
         post_result = self.post_only_path(self.base_url + path)
+
         return post_result
+
+    def delete_single_pet(self, pet_id):
+        path = f"/pet/{pet_id}"
+
+        delete_result = self.delete(self.base_url + path)
+
+        return delete_result

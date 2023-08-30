@@ -1,20 +1,21 @@
 import logging
 import pytest
 import curlify
-import requests
 from requests import Response
 from pytest_voluptuous import S
 from model.schemas import pets_schema
 from model.versions.petstore_pet import PetApi
 
 
-
+@pytest.fixture()
+def pet_api():
+    api_pet = PetApi()
+    return api_pet
 
 class TestPositivePet:
 
     @pytest.mark.parametrize("pet_id", [163634637])
-    def test_create_pet(self, pet_id):
-        pet_api = PetApi()
+    def test_create_pet(self, pet_id, pet_api):
         result: Response = pet_api.create_new_pet(
             pet_id=pet_id,
             category_id=16633666,
@@ -30,8 +31,7 @@ class TestPositivePet:
 
 
     @pytest.mark.parametrize("pet_id", [163634637])
-    def test_check_new_pet(self, pet_id):
-        pet_api = PetApi()
+    def test_check_new_pet(self, pet_id, pet_api):
         result: Response = pet_api.get_single_pet(pet_id=pet_id)
 
         logging.info(curlify.to_curl(result.request))
@@ -42,8 +42,7 @@ class TestPositivePet:
 
 
     @pytest.mark.parametrize("pet_name", ["Shakira"])
-    def test_data_filling_pet(self, pet_name):
-        pet_api = PetApi()
+    def test_data_filling_pet(self, pet_name, pet_api):
 
         result: Response = pet_api.put_single_pet(
             pet_id=163634637, category_id=16633666,
@@ -60,8 +59,7 @@ class TestPositivePet:
 
 
     @pytest.mark.parametrize("pet_state", ["pending"])
-    def test_data_filling_state_pet(self, pet_state):
-        pet_api = PetApi()
+    def test_data_filling_state_pet(self, pet_state, pet_api):
 
         result: Response =  pet_api.post_status_single_pet(pet_id=163634637, pet_state=pet_state)
         logging.info(curlify.to_curl(result.request))
@@ -73,8 +71,7 @@ class TestPositivePet:
 
 
     @pytest.mark.parametrize("pet_id", [163634637])
-    def test_delete_single_pet(self, pet_id):
-        pet_api = PetApi()
+    def test_delete_single_pet(self, pet_id, pet_api):
 
         result: Response = pet_api.delete_single_pet(pet_id=pet_id)
         logging.info(curlify.to_curl(result.request))

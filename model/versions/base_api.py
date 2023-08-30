@@ -16,8 +16,8 @@ class BaseApi:
         return response
 
     @staticmethod
-    def post_only_path(path):
-        response: Response = requests.post(path)
+    def post_only_path(path, data):
+        response: Response = requests.post(path,data=data)
         return response
 
 

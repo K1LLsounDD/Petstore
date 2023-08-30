@@ -40,6 +40,7 @@ create_single_pet = Schema(pet_shema)
 
 put_single_pet = Schema(pet_shema)
 
+delete_pet_schema = Schema(three_default_values)
 
 
 

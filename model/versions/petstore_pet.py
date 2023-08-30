@@ -74,10 +74,13 @@ class PetApi(BaseApi):
 
         return put_result
 
-    def post_status_single_pet(self, pet_id, state):
-        path = f"/pet/{pet_id}?status={state}"
+    def post_status_single_pet(self, pet_id, pet_state):
+        path = f"/pet/{pet_id}"
+        data = {
+            "status": pet_state
+        }
 
-        post_result = self.post_only_path(self.base_url + path)
+        post_result = self.post_only_path(self.base_url + path, data)
 
         return post_result
 

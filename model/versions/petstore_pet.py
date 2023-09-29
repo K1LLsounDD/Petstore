@@ -30,7 +30,8 @@ class PetApi(BaseApi):
         }
         return body
 
-    def create_new_pet(
+
+    def create_new_pet_post_method(
             self, pet_id, category_id,
                category_name, pet_name,
                url_photos, tag_id, tag_name,
@@ -48,12 +49,29 @@ class PetApi(BaseApi):
         return post_result
 
 
+    def create_new_pet_with_get_method(
+            self, pet_id, category_id,
+               category_name, pet_name,
+               url_photos, tag_id, tag_name,
+               state
+    ):
+        path = "/pet"
+        body = PetApi.data_filling(pet_id, category_id,
+               category_name, pet_name, url_photos,
+               tag_id, tag_name, state)
+
+        get_result = self.get_with_body(self.base_url + path, body)
+
+        return get_result
+
+
     def get_single_pet(self, pet_id):
         path = f'/pet/{pet_id}'
 
         get_result = self.get(self.base_url + path)
 
         return get_result
+
 
     def put_single_pet(
             self, pet_id, category_id,
@@ -74,6 +92,7 @@ class PetApi(BaseApi):
 
         return put_result
 
+
     def post_status_single_pet(self, pet_id, pet_state):
         path = f"/pet/{pet_id}"
         data = {
@@ -83,6 +102,7 @@ class PetApi(BaseApi):
         post_result = self.post_only_path(self.base_url + path, data)
 
         return post_result
+
 
     def delete_single_pet(self, pet_id):
         path = f"/pet/{pet_id}"

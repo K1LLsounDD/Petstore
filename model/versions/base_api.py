@@ -9,6 +9,11 @@ class BaseApi:
         response: Response = requests.get(path)
         return response
 
+    @staticmethod
+    def get_with_body(path, body):
+        response: Response = requests.get(path, body)
+        return response
+
 
     @staticmethod
     def post(path, body):
@@ -17,7 +22,7 @@ class BaseApi:
 
     @staticmethod
     def post_only_path(path, data):
-        response: Response = requests.post(path,data=data)
+        response: Response = requests.post(path, data=data)
         return response
 
 
